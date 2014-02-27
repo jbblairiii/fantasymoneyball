@@ -58,6 +58,10 @@ public class FantasyYahooService {
         return response;
     }
     
+    public Boolean hasAuthUrl(){
+        return (authUrl!=null);
+    }
+    
     public Boolean isVerified(){
         return (!accessToken.isEmpty());
     }
