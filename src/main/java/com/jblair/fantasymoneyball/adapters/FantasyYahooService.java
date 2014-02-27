@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jblair.fantasymoneyball.yahooadapter;
+package com.jblair.fantasymoneyball.adapters;
 
 import java.awt.Desktop;
 import java.io.BufferedReader;
