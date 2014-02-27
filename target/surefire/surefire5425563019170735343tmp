@@ -1,0 +1,22 @@
+#surefire
+#Thu Feb 27 07:59:57 EST 2014
+testClassesDirectory=C\:\\Users\\jb834r\\Documents\\NetBeansProjects\\FantasyMoneyBall\\target\\test-classes
+forkMode=once
+classPathUrl.3=C\:\\Users\\jb834r\\.m2\\repository\\org\\scribe\\scribe\\1.3.5\\scribe-1.3.5.jar
+classPathUrl.2=C\:\\Users\\jb834r\\.m2\\repository\\junit\\junit\\3.8.1\\junit-3.8.1.jar
+useManifestOnlyJar=true
+classPathUrl.1=C\:\\Users\\jb834r\\Documents\\NetBeansProjects\\FantasyMoneyBall\\target\\classes
+classPathUrl.0=C\:\\Users\\jb834r\\Documents\\NetBeansProjects\\FantasyMoneyBall\\target\\test-classes
+reportsDirectory=C\:\\Users\\jb834r\\Documents\\NetBeansProjects\\FantasyMoneyBall\\target\\surefire-reports
+providerConfiguration=org.apache.maven.surefire.junit.JUnit3Provider
+testSuiteDefinitionTestSourceDirectory=C\:\\Users\\jb834r\\Documents\\NetBeansProjects\\FantasyMoneyBall\\src\\test\\java
+requestedTest=com.jblair.fantasymoneyball.yahooadapter.FantasyYahooServiceTest
+surefireClassPathUrl.1=C\:\\Users\\jb834r\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-api\\2.10\\surefire-api-2.10.jar
+surefireClassPathUrl.0=C\:\\Users\\jb834r\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-junit3\\2.10\\surefire-junit3-2.10.jar
+runOrder=filesystem
+useSystemClassLoader=true
+isTrimStackTrace=true
+enableAssertions=true
+failIfNoTests=true
+includes0=**/com/jblair/fantasymoneyball/yahooadapter/FantasyYahooServiceTest.java
+childDelegation=false
