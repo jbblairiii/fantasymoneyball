@@ -1,6 +1,0 @@
-#surefire
-#Thu Feb 27 07:43:35 EST 2014
-user.dir=C\:\\Users\\jb834r\\Documents\\NetBeansProjects\\FantasyMoneyBall
-localRepository=C\:\\Users\\jb834r\\.m2\\repository
-basedir=C\:\\Users\\jb834r\\Documents\\NetBeansProjects\\FantasyMoneyBall
-test=com.jblair.fantasymoneyball.yahooadapter.FantasyYahooServiceTest
