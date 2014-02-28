@@ -32,6 +32,25 @@ public class FantasyYahooService {
         yahooSecret=secret;
     }
     
+    public static void main(String[] args) throws IOException, URISyntaxException{
+        FantasyYahooService fantasyAPI = new FantasyYahooService("dj0yJmk9U3pwQVJ2QmdNUzJNJmQ9WVdrOWJuTkphbk50TjJjbWNHbzlOall5TURBME9UWXkmcz1jb25zdW1lcnNlY3JldCZ4PWVl",
+                            "bb740a758d4166a05d9f6ba23c982e7d96491e6a");
+        
+        fantasyAPI.authorize();
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter Authorization Code:");
+	String authCode = in.readLine();
+        
+        fantasyAPI.verify(authCode);
+        
+        Verb type = Verb.GET;	
+        String leagueKey = "mlb.l.67468";
+        String requestURL =  "http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=SS/draft_analysis";
+        Response result = fantasyAPI.request(type, requestURL);
+        
+        System.out.println(result.getBody());
+    }
+    
     public void authorize() throws IOException, URISyntaxException{
         authService = new ServiceBuilder()
 			.provider(YahooApi.class)
