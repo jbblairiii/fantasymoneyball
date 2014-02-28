@@ -45,7 +45,7 @@ public class FantasyYahooService {
         
         Verb type = Verb.GET;	
         String leagueKey = "mlb.l.67468";
-        String requestURL =  "http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=SS/draft_analysis";
+        String requestURL =  "http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=1B/draft_analysis";
         Response result = fantasyAPI.request(type, requestURL);
         
         System.out.println(result.getBody());

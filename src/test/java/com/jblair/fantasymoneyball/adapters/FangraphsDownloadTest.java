@@ -5,6 +5,7 @@
 package com.jblair.fantasymoneyball.adapters;
 
 import com.jblair.fantasymoneyball.players.Player;
+import com.jblair.fantasymoneyball.players.Stat;
 import java.util.Map;
 import junit.framework.TestCase;
 
@@ -29,10 +30,9 @@ public class FangraphsDownloadTest extends TestCase {
     }
 
     public void testLoad1B() {
-        // TODO review the generated test code and remove the default call to fail.
         FangraphsDownload fgDown = new FangraphsDownload();     
-        Map<String, Player> firstBasement = fgDown.load1B();
-        Player cdavis = firstBasement.get("Chris Davis");
-        fail("The test case is a prototype.");
+        Map<String, Player> firstBasemen = fgDown.load1B();
+        Player cdavis = firstBasemen.get("Chris Davis");
+        assertEquals(41.0, cdavis.getStat(Stat.HR));
     }
 }

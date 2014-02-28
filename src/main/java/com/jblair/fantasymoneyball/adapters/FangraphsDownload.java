@@ -7,9 +7,12 @@
 package com.jblair.fantasymoneyball.adapters;
 
 import com.jblair.fantasymoneyball.players.Player;
+import com.jblair.fantasymoneyball.players.Position;
+import com.jblair.fantasymoneyball.players.Stat;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -22,23 +25,68 @@ import java.util.logging.Logger;
 public class FangraphsDownload {
     private static final String COMMA = ",";
 
-    public Map<String, Player> load1B() {
-        Map<String, Player> firstBasemen = new HashMap<String, Player>();
-        String projections_1b = "projections/fans_1b.csv";
+    public Map<String, Player> load1B(){
+        String[] filenames = {"projections/fans_1b.csv"};
+        return loadStats(filenames);
+    }
+    
+    public Map<String, Player> load2B(){
+        String[] filenames = {"projections/fans_2b.csv"};
+        return loadStats(filenames);
+    }
+    
+    public Map<String, Player> load3B(){
+        String[] filenames = {"projections/fans_3b.csv"};
+        return loadStats(filenames);
+    }
+    
+    public Map<String, Player> loadSS(){
+        String[] filenames = {"projections/fans_ss.csv"};
+        return loadStats(filenames);
+    }
+    
+    public Map<String, Player> loadOF(){
+        String[] filenames = {"projections/fans_of1.csv",
+                                "projections/fans_of2.csv"};
+        return loadStats(filenames);
+    }
+    
+    public Map<String, Player> loadP(){
+        String[] filenames = {"projections/fans_1p1.csv",
+                                "projections/fans_1p2.csv",
+                                "projections/fans_1p3.csv"};
+        return loadStats(filenames);
+    }
+    
+    //helper for all of the load by specific position
+    private Map<String, Player> loadStats(String[] filenames) {
+        Map<String, Player> playerMap = new HashMap<String, Player>();
         BufferedReader reader = null;
+        String line = "";
+        Boolean header=true;
         
-       
-        try {
-            reader = new BufferedReader(new FileReader(projections_1b));
-            //while((reader.readLine()) != null){
-                     
-        } 
-        catch (FileNotFoundException ex) {
-            Logger.getLogger(FangraphsDownload.class.getName()).log(Level.SEVERE, null, ex);
+        for(String file : filenames){
+            try {
+                reader = new BufferedReader(new FileReader(file));   
+                             
+                while((line = reader.readLine()) != null){
+                    if(header){header=false; continue;} // skips the header line
+                    
+                    // splits the file on commas and remove quotes
+                    String[] projections = line.split(COMMA); 
+                    String fullName = projections[0]
+                                        .replaceAll("\"", "");
+                    
+                    Player newPlayer = new Player(fullName, projections); 
+                    playerMap.put(fullName, newPlayer);
+                }
+            } 
+            catch (IOException io){
+
+            }
         }
-        
-        
-        return firstBasemen;
+               
+        return playerMap;
     }
     
     

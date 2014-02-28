@@ -9,5 +9,5 @@ package com.jblair.fantasymoneyball.players;
  * @author JB
  */
 public enum Position {
-    FIRST, SECOND, THIRD, SHORT, LEFT, CENTER, RIGHT, CATCHER, CLOSER, RELIEF, START
+    FIRST, SECOND, THIRD, SHORT, LEFT, CENTER, RIGHT, CATCHER, CLOSER, RELIEF, START, NONE
 }
