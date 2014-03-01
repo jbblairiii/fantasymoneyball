@@ -52,9 +52,9 @@ public class FangraphsDownload {
     }
     
     public Map<String, Player> loadP(){
-        String[] filenames = {"projections/fans_1p1.csv",
-                                "projections/fans_1p2.csv",
-                                "projections/fans_1p3.csv"};
+        String[] filenames = {"projections/fans_p1.csv",
+                                "projections/fans_p2.csv",
+                                "projections/fans_p3.csv"};
         return loadStats(filenames);
     }
     
