@@ -1,0 +1,94 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://fantasysports.yahooapis.com/fantasy/v2/base.rng" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="fantasy_content">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="league">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="league_key"/>
+              <xs:element type="xs:int" name="league_id"/>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element type="xs:anyURI" name="url"/>
+              <xs:element type="xs:string" name="draft_status"/>
+              <xs:element type="xs:byte" name="num_teams"/>
+              <xs:element type="xs:date" name="edit_key"/>
+              <xs:element type="xs:byte" name="weekly_deadline"/>
+              <xs:element type="xs:string" name="league_update_timestamp"/>
+              <xs:element type="xs:string" name="scoring_type"/>
+              <xs:element type="xs:string" name="league_type"/>
+              <xs:element type="xs:byte" name="is_pro_league"/>
+              <xs:element type="xs:date" name="start_date"/>
+              <xs:element type="xs:date" name="end_date"/>
+              <xs:element name="players">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="player" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="player_key"/>
+                          <xs:element type="xs:short" name="player_id"/>
+                          <xs:element name="name">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="full"/>
+                                <xs:element type="xs:string" name="first"/>
+                                <xs:element type="xs:string" name="last"/>
+                                <xs:element type="xs:string" name="ascii_first"/>
+                                <xs:element type="xs:string" name="ascii_last"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="editorial_player_key"/>
+                          <xs:element type="xs:string" name="editorial_team_key"/>
+                          <xs:element type="xs:string" name="editorial_team_full_name"/>
+                          <xs:element type="xs:string" name="editorial_team_abbr"/>
+                          <xs:element type="xs:byte" name="uniform_number"/>
+                          <xs:element type="xs:string" name="display_position"/>
+                          <xs:element name="headshot">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:anyURI" name="url"/>
+                                <xs:element type="xs:string" name="size"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:anyURI" name="image_url"/>
+                          <xs:element type="xs:byte" name="is_undroppable"/>
+                          <xs:element type="xs:string" name="position_type"/>
+                          <xs:element name="eligible_positions">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="position" maxOccurs="unbounded" minOccurs="0"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:byte" name="has_player_notes" minOccurs="0"/>
+                          <xs:element type="xs:byte" name="has_recent_player_notes" minOccurs="0"/>
+                          <xs:element name="draft_analysis">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:float" name="average_pick"/>
+                                <xs:element type="xs:float" name="average_round"/>
+                                <xs:element type="xs:float" name="average_cost"/>
+                                <xs:element type="xs:float" name="percent_drafted"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:byte" name="count"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute type="xs:string" name="time"/>
+      <xs:attribute type="xs:string" name="copyright"/>
+      <xs:attribute type="xs:byte" name="refresh_rate"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

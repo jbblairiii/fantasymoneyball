@@ -4,10 +4,12 @@
  */
 package com.jblair.fantasymoneyball.adapters;
 
+import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -15,6 +17,11 @@ import org.scribe.builder.*;
 import org.scribe.builder.api.*;
 import org.scribe.model.*;
 import org.scribe.oauth.*;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 /**
  *
@@ -32,7 +39,7 @@ public class FantasyYahooService {
         yahooSecret=secret;
     }
     
-    public static void main(String[] args) throws IOException, URISyntaxException{
+    public static void main(String[] args) throws IOException, URISyntaxException, JAXBException{
         FantasyYahooService fantasyAPI = new FantasyYahooService("dj0yJmk9U3pwQVJ2QmdNUzJNJmQ9WVdrOWJuTkphbk50TjJjbWNHbzlOall5TURBME9UWXkmcz1jb25zdW1lcnNlY3JldCZ4PWVl",
                             "bb740a758d4166a05d9f6ba23c982e7d96491e6a");
         
@@ -45,10 +52,17 @@ public class FantasyYahooService {
         
         Verb type = Verb.GET;	
         String leagueKey = "mlb.l.67468";
+        //String requestURL = "http://fantasysports.yahooapis.com/fantasy/v2/player.xsd";
         String requestURL =  "http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=1B/draft_analysis";
         Response result = fantasyAPI.request(type, requestURL);
         
-        System.out.println(result.getBody());
+        JAXBContext jaxbContext = JAXBContext.newInstance("com.yahooapis.fantasysports.fantasy.v2.base");
+        StringReader sr = new StringReader(result.getBody());
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        FantasyContent response = (FantasyContent) unmarshaller.unmarshal(sr);
+ 
+        
+        System.out.println(response.getLeague().getPlayers().getPlayer().get(0).getName().getAsciiFirst());
     }
     
     public void authorize() throws IOException, URISyntaxException{
