@@ -5,6 +5,8 @@
 package com.jblair.fantasymoneyball.adapters;
 
 import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent;
+import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent.League.Players;
+import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent.League.Players.Player;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +14,9 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.scribe.builder.*;
 import org.scribe.builder.api.*;
@@ -29,40 +34,84 @@ import javax.xml.bind.Unmarshaller;
  */
 public class FantasyYahooService {
     
-    private String yahooKey, yahooSecret;
+    private String yahooKey, yahooSecret, leagueKey;
     private String authUrl;
     private OAuthService authService;
     private Token requestToken, accessToken;
+    private JAXBContext jaxbContext;
+    private Unmarshaller unmarshaller;
     
-    public FantasyYahooService(String key, String secret){
+    public FantasyYahooService(String key, String secret, String lkey) throws JAXBException{
         yahooKey=key;
         yahooSecret=secret;
+        leagueKey=lkey;
+        jaxbContext = JAXBContext.newInstance("com.yahooapis.fantasysports.fantasy.v2.base");
+        unmarshaller = jaxbContext.createUnmarshaller();
+    }
+     
+    private List<Player> getPlayers(String requestURL){
+        Response result = request(Verb.GET, requestURL);
+        StringReader sr = new StringReader(result.getBody());
+             
+        FantasyContent response=null;
+        try {
+            response = (FantasyContent) unmarshaller.unmarshal(sr);
+        } catch (JAXBException ex) {
+            Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+        return response.getLeague().getPlayers().getPlayer();
+    }
+      
+    public List<Player> getCatchers(){
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=C/draft_analysis");
     }
     
-    public static void main(String[] args) throws IOException, URISyntaxException, JAXBException{
-        FantasyYahooService fantasyAPI = new FantasyYahooService("dj0yJmk9U3pwQVJ2QmdNUzJNJmQ9WVdrOWJuTkphbk50TjJjbWNHbzlOall5TURBME9UWXkmcz1jb25zdW1lcnNlY3JldCZ4PWVl",
-                            "bb740a758d4166a05d9f6ba23c982e7d96491e6a");
+    public List<Player> getFirstBasemen(){
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=1B/draft_analysis");
+    }
+    
+    public List<Player> getSecondBasemen(){
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=2B/draft_analysis");
+    }
+    
+    public List<Player> getThirdBasemen(){
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=3B/draft_analysis");
+    }
+    
+    public List<Player> getShortstops(){
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=SS/draft_analysis");
+    }
+    
+    public List<Player> getOutfielders(){
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=OF/draft_analysis");
+    }
+    
+    public List<Player> getPitchers(){
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=P/draft_analysis");
+    }
+       
+    
+    public void connectApi(){
+        try {
+            authorize();
+        } catch (IOException ex) {
+            Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        fantasyAPI.authorize();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter Authorization Code:");
-	String authCode = in.readLine();
+        String authCode="";
+        try {
+            authCode = in.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        fantasyAPI.verify(authCode);
-        
-        Verb type = Verb.GET;	
-        String leagueKey = "mlb.l.67468";
-        //String requestURL = "http://fantasysports.yahooapis.com/fantasy/v2/player.xsd";
-        String requestURL =  "http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=1B/draft_analysis";
-        Response result = fantasyAPI.request(type, requestURL);
-        
-        JAXBContext jaxbContext = JAXBContext.newInstance("com.yahooapis.fantasysports.fantasy.v2.base");
-        StringReader sr = new StringReader(result.getBody());
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        FantasyContent response = (FantasyContent) unmarshaller.unmarshal(sr);
- 
-        
-        System.out.println(response.getLeague().getPlayers().getPlayer().get(0).getName().getAsciiFirst());
+        verify(authCode);
     }
     
     public void authorize() throws IOException, URISyntaxException{
@@ -79,12 +128,12 @@ public class FantasyYahooService {
         Desktop.getDesktop().browse(new URI(authUrl));
     }
     
-    public void verify(String verification){
+    private void verify(String verification){
         Verifier v = new Verifier(verification);
 	accessToken = authService.getAccessToken(requestToken, v);
     }
     
-    public Response request(Verb type, String requestURL){
+    private Response request(Verb type, String requestURL){
         OAuthRequest request = new OAuthRequest(type, requestURL);
         authService.signRequest(accessToken, request); // the access token from step 4
         Response response = request.send();

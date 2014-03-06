@@ -6,7 +6,7 @@
 
 package com.jblair.fantasymoneyball.adapters;
 
-import com.jblair.fantasymoneyball.players.Player;
+import com.jblair.fantasymoneyball.players.FangraphPlayer;
 import com.jblair.fantasymoneyball.players.Position;
 import com.jblair.fantasymoneyball.players.Stat;
 import java.io.BufferedReader;
@@ -25,33 +25,38 @@ import java.util.logging.Logger;
 public class FangraphsDownload {
     private static final String COMMA = ",";
 
-    public Map<String, Player> load1B(){
+    public Map<String, FangraphPlayer> loadC(){
+        String[] filenames = {"projections/fans_c.csv"};
+        return loadStats(filenames);
+    }
+    
+    public Map<String, FangraphPlayer> load1B(){
         String[] filenames = {"projections/fans_1b.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, Player> load2B(){
+    public Map<String, FangraphPlayer> load2B(){
         String[] filenames = {"projections/fans_2b.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, Player> load3B(){
+    public Map<String, FangraphPlayer> load3B(){
         String[] filenames = {"projections/fans_3b.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, Player> loadSS(){
+    public Map<String, FangraphPlayer> loadSS(){
         String[] filenames = {"projections/fans_ss.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, Player> loadOF(){
+    public Map<String, FangraphPlayer> loadOF(){
         String[] filenames = {"projections/fans_of1.csv",
                                 "projections/fans_of2.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, Player> loadP(){
+    public Map<String, FangraphPlayer> loadP(){
         String[] filenames = {"projections/fans_p1.csv",
                                 "projections/fans_p2.csv",
                                 "projections/fans_p3.csv"};
@@ -59,8 +64,8 @@ public class FangraphsDownload {
     }
     
     //helper for all of the load by specific position
-    private Map<String, Player> loadStats(String[] filenames) {
-        Map<String, Player> playerMap = new HashMap<String, Player>();
+    private Map<String, FangraphPlayer> loadStats(String[] filenames) {
+        Map<String, FangraphPlayer> playerMap = new HashMap<String, FangraphPlayer>();
         BufferedReader reader = null;
         String line = "";
         Boolean header=true;
@@ -77,7 +82,7 @@ public class FangraphsDownload {
                     String fullName = projections[0]
                                         .replaceAll("\"", "");
                     
-                    Player newPlayer = new Player(fullName, projections); 
+                    FangraphPlayer newPlayer = new FangraphPlayer(fullName, projections); 
                     playerMap.put(fullName, newPlayer);
                 }
             } 

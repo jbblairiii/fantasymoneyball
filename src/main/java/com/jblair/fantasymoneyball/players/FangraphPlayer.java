@@ -8,13 +8,13 @@ package com.jblair.fantasymoneyball.players;
  *
  * @author JB
  */
-public class Player {
+public class FangraphPlayer {
     private String fullName;
     private Position[] positions;
     private double[] stats;
     private double[] draftProjections;
   
-    public Player(String name, String[] strStats){
+    public FangraphPlayer(String name, String[] strStats){
         fullName = name;
         positions = new Position[3]; 
         draftProjections = new double[3];
