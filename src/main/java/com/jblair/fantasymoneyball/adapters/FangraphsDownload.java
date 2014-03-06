@@ -6,7 +6,7 @@
 
 package com.jblair.fantasymoneyball.adapters;
 
-import com.jblair.fantasymoneyball.players.FangraphPlayer;
+import com.jblair.fantasymoneyball.players.FangraphsPlayer;
 import com.jblair.fantasymoneyball.players.Position;
 import com.jblair.fantasymoneyball.players.Stat;
 import java.io.BufferedReader;
@@ -25,52 +25,49 @@ import java.util.logging.Logger;
 public class FangraphsDownload {
     private static final String COMMA = ",";
 
-    public Map<String, FangraphPlayer> loadC(){
+    public Map<String, FangraphsPlayer> loadC(){
         String[] filenames = {"projections/fans_c.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, FangraphPlayer> load1B(){
+    public Map<String, FangraphsPlayer> load1B(){
         String[] filenames = {"projections/fans_1b.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, FangraphPlayer> load2B(){
+    public Map<String, FangraphsPlayer> load2B(){
         String[] filenames = {"projections/fans_2b.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, FangraphPlayer> load3B(){
+    public Map<String, FangraphsPlayer> load3B(){
         String[] filenames = {"projections/fans_3b.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, FangraphPlayer> loadSS(){
+    public Map<String, FangraphsPlayer> loadSS(){
         String[] filenames = {"projections/fans_ss.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, FangraphPlayer> loadOF(){
-        String[] filenames = {"projections/fans_of1.csv",
-                                "projections/fans_of2.csv"};
+    public Map<String, FangraphsPlayer> loadOF(){
+        String[] filenames = {"projections/fans_of1.csv"};
         return loadStats(filenames);
     }
     
-    public Map<String, FangraphPlayer> loadP(){
-        String[] filenames = {"projections/fans_p1.csv",
-                                "projections/fans_p2.csv",
-                                "projections/fans_p3.csv"};
+    public Map<String, FangraphsPlayer> loadP(){
+        String[] filenames = {"projections/fans_p1.csv"};
         return loadStats(filenames);
     }
     
     //helper for all of the load by specific position
-    private Map<String, FangraphPlayer> loadStats(String[] filenames) {
-        Map<String, FangraphPlayer> playerMap = new HashMap<String, FangraphPlayer>();
+    private Map<String, FangraphsPlayer> loadStats(String[] filenames) {
+        Map<String, FangraphsPlayer> playerMap = new HashMap<String, FangraphsPlayer>();
         BufferedReader reader = null;
         String line = "";
-        Boolean header=true;
         
         for(String file : filenames){
+            Boolean header=true;
             try {
                 reader = new BufferedReader(new FileReader(file));   
                              
@@ -82,7 +79,7 @@ public class FangraphsDownload {
                     String fullName = projections[0]
                                         .replaceAll("\"", "");
                     
-                    FangraphPlayer newPlayer = new FangraphPlayer(fullName, projections); 
+                    FangraphsPlayer newPlayer = new FangraphsPlayer(fullName, projections); 
                     playerMap.put(fullName, newPlayer);
                 }
             } 

@@ -4,6 +4,7 @@
  */
 package com.jblair.fantasymoneyball.adapters;
 
+import com.jblair.fantasymoneyball.players.DraftProjection;
 import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent;
 import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent.League.Players;
 import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent.League.Players.Player;
@@ -48,7 +49,32 @@ public class FantasyYahooService {
         jaxbContext = JAXBContext.newInstance("com.yahooapis.fantasysports.fantasy.v2.base");
         unmarshaller = jaxbContext.createUnmarshaller();
     }
-     
+    
+    public float[] getDraftProjectionsFor(String first, String last){
+        float[] projections = new float[4];
+        
+        List<Player> playersWithLast = getPlayersByName(last);
+        
+        System.out.println("Found " + playersWithLast.size() + " players with last name of " + last);
+        
+        Player searchingFor = null;
+        for(Player player : playersWithLast){
+            System.out.println("checking on " + player.getName().getFull());
+            if(player.getName().getFirst().equalsIgnoreCase(first)){
+                System.out.println("Found " + player.getName());
+                searchingFor = player;
+                break;
+            }
+        }
+
+        projections[DraftProjection.AVG_COST.ordinal()] = searchingFor.getDraftAnalysis().getAverageCost();
+        projections[DraftProjection.AVG_PICK.ordinal()] = searchingFor.getDraftAnalysis().getAveragePick();
+        projections[DraftProjection.AVG_ROUND.ordinal()] = searchingFor.getDraftAnalysis().getAverageRound();
+        projections[DraftProjection.PER_DRAFTED.ordinal()] = searchingFor.getDraftAnalysis().getPercentDrafted();
+        
+        return projections;
+    }
+    
     private List<Player> getPlayers(String requestURL){
         Response result = request(Verb.GET, requestURL);
         StringReader sr = new StringReader(result.getBody());
@@ -63,33 +89,37 @@ public class FantasyYahooService {
         
         return response.getLeague().getPlayers().getPlayer();
     }
-      
+     
+    public List<Player> getPlayersByName(String last){
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;search="+last.toLowerCase()+";sort=OR;count=50/draft_analysis");
+    }
+    
     public List<Player> getCatchers(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=C/draft_analysis");
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=C;sort=OR;count=50/draft_analysis");
     }
     
     public List<Player> getFirstBasemen(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=1B/draft_analysis");
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=1B;sort=OR;count=50/draft_analysis");
     }
     
     public List<Player> getSecondBasemen(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=2B/draft_analysis");
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=2B;sort=OR;count=50/draft_analysis");
     }
     
     public List<Player> getThirdBasemen(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=3B/draft_analysis");
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=3B;sort=OR;count=50/draft_analysis");
     }
     
     public List<Player> getShortstops(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=SS/draft_analysis");
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=SS;sort=OR;count=50/draft_analysis");
     }
     
     public List<Player> getOutfielders(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=OF/draft_analysis");
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=OF;sort=OR;count=100/draft_analysis");
     }
     
     public List<Player> getPitchers(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=P/draft_analysis");
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=P;sort=OR;count=100/draft_analysis");
     }
        
     

@@ -4,7 +4,7 @@
  */
 package com.jblair.fantasymoneyball.adapters;
 
-import com.jblair.fantasymoneyball.players.FangraphPlayer;
+import com.jblair.fantasymoneyball.players.FangraphsPlayer;
 import com.jblair.fantasymoneyball.players.Stat;
 import java.util.Map;
 import junit.framework.TestCase;
@@ -31,8 +31,8 @@ public class FangraphsDownloadTest extends TestCase {
 
     public void testLoad1B() {
         FangraphsDownload fgDown = new FangraphsDownload();     
-        Map<String, FangraphPlayer> firstBasemen = fgDown.load1B();
-        FangraphPlayer cdavis = firstBasemen.get("Chris Davis");
+        Map<String, FangraphsPlayer> firstBasemen = fgDown.load1B();
+        FangraphsPlayer cdavis = firstBasemen.get("Chris Davis");
         assertEquals(41.0, cdavis.getStat(Stat.HR));
     }
 }

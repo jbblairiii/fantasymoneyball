@@ -8,19 +8,19 @@ package com.jblair.fantasymoneyball.players;
  *
  * @author JB
  */
-public class FangraphPlayer {
+public class FangraphsPlayer {
     private String fullName;
     private Position[] positions;
     private double[] stats;
-    private double[] draftProjections;
+    private float[] draftProjections;
   
-    public FangraphPlayer(String name, String[] strStats){
+    public FangraphsPlayer(String name, String[] strStats){
         fullName = name;
         positions = new Position[3]; 
-        draftProjections = new double[3];
+        draftProjections = new float[4];
         
-        stats = new double[23];
-        for(int stat=1; stat<stats.length; stat++){
+        stats = new double[22];
+        for(int stat=1; stat<stats.length; stat++){ //might be a pitcher, less stats
             //removes "" around stats
             stats[stat-1] = Double.parseDouble(strStats[stat].replaceAll("\"", "")); 
         }
@@ -34,7 +34,7 @@ public class FangraphPlayer {
         stats = _stats;
     }
     
-    public void setDraftProjections(double[] _proj){
+    public void setDraftProjections(float[] _proj){
         draftProjections = _proj;
     }
     
@@ -54,7 +54,7 @@ public class FangraphPlayer {
         return stats[stat.ordinal()];
     }
     
-    public double getDraftProject(DraftProjection draft){
+    public float getDraftProject(DraftProjection draft){
         return draftProjections[draft.ordinal()];
     }
     

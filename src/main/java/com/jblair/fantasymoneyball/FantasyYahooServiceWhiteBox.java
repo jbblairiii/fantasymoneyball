@@ -86,6 +86,6 @@ public class FantasyYahooServiceWhiteBox {
         else {
             System.err.println("Couldn't retrieve pitchers " + pos);
         }
-              
+                     
     }
 }
