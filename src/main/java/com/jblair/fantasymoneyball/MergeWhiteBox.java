@@ -10,6 +10,7 @@ import com.jblair.fantasymoneyball.players.DraftProjection;
 import com.jblair.fantasymoneyball.players.FangraphsPlayer;
 import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent.League.Players;
 import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent.League.Players.Player;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -24,7 +25,9 @@ public class MergeWhiteBox {
         
         FangraphYahooMerge allStats = new FangraphYahooMerge();
         Map<String, FangraphsPlayer> firstBasemen = allStats.getFirstBasemen();
-        
-        System.out.println(firstBasemen.get("Chris Davis").getDraftProject(DraftProjection.AVG_PICK));
+
+        for(Map.Entry<String, FangraphsPlayer> entry : firstBasemen.entrySet()){         
+            System.out.println(entry.getValue());
+        }
     }
 }

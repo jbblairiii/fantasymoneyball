@@ -54,14 +54,10 @@ public class FantasyYahooService {
         float[] projections = new float[4];
         
         List<Player> playersWithLast = getPlayersByName(last);
-        
-        System.out.println("Found " + playersWithLast.size() + " players with last name of " + last);
-        
+                
         Player searchingFor = null;
         for(Player player : playersWithLast){
-            System.out.println("checking on " + player.getName().getFull());
             if(player.getName().getFirst().equalsIgnoreCase(first)){
-                System.out.println("Found " + player.getName());
                 searchingFor = player;
                 break;
             }
@@ -79,7 +75,7 @@ public class FantasyYahooService {
         Response result = request(Verb.GET, requestURL);
         StringReader sr = new StringReader(result.getBody());
              
-        FantasyContent response=null;
+                FantasyContent response=null;
         try {
             response = (FantasyContent) unmarshaller.unmarshal(sr);
         } catch (JAXBException ex) {

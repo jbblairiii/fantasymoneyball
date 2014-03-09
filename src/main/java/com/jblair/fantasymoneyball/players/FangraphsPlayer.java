@@ -13,6 +13,7 @@ public class FangraphsPlayer {
     private Position[] positions;
     private double[] stats;
     private float[] draftProjections;
+    private final int NUM_STATS=5; //only the stats that cost money
   
     public FangraphsPlayer(String name, String[] strStats){
         fullName = name;
@@ -54,7 +55,7 @@ public class FangraphsPlayer {
         return stats[stat.ordinal()];
     }
     
-    public float getDraftProject(DraftProjection draft){
+    public float getDraftProjection(DraftProjection draft){
         return draftProjections[draft.ordinal()];
     }
     
@@ -68,5 +69,18 @@ public class FangraphsPlayer {
     
     public String getFullName(){
         return fullName;
+    }
+    
+    //pricing only matters for AVG, R, RBI, HR, SB
+    public double pricePerStat(Stat stat){
+        return getDraftProjection(DraftProjection.AVG_COST) / 5 / stats[stat.ordinal()];
+    }
+    
+    public String toString(){
+        return getFullName() + " $" + getDraftProjection(DraftProjection.AVG_COST) + " " +
+                "\nPrice per R:\t" + pricePerStat(Stat.R) +
+                "\nPrice per RBI:\t" + pricePerStat(Stat.RBI) +
+                "\nPrice per HR:\t" + pricePerStat(Stat.HR) +
+                "\nPrice per SB:\t" + pricePerStat(Stat.SB) + "\n";
     }
 }
