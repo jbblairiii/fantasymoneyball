@@ -78,9 +78,9 @@ public class FangraphsPlayer {
     
     public String toString(){
         return getFullName() + " $" + getDraftProjection(DraftProjection.AVG_COST) + " " +
-                "\nPrice per R:\t" + pricePerStat(Stat.R) +
-                "\nPrice per RBI:\t" + pricePerStat(Stat.RBI) +
-                "\nPrice per HR:\t" + pricePerStat(Stat.HR) +
-                "\nPrice per SB:\t" + pricePerStat(Stat.SB) + "\n";
+                "\nPrice per R ("+ stats[Stat.R.ordinal()] +") :\t" + pricePerStat(Stat.R) +
+                "\nPrice per RBI("+ stats[Stat.RBI.ordinal()] +"):\t" + pricePerStat(Stat.RBI) +
+                "\nPrice per HR("+ stats[Stat.HR.ordinal()] +"):\t" + pricePerStat(Stat.HR) +
+                "\nPrice per SB("+ stats[Stat.SB.ordinal()] +"):\t" + pricePerStat(Stat.SB) + "\n";
     }
 }

@@ -34,30 +34,30 @@ import javax.xml.bind.Unmarshaller;
  * @author jb834r
  */
 public class FantasyYahooService {
-    
+
     private String yahooKey, yahooSecret, leagueKey;
     private String authUrl;
     private OAuthService authService;
     private Token requestToken, accessToken;
     private JAXBContext jaxbContext;
     private Unmarshaller unmarshaller;
-    
-    public FantasyYahooService(String key, String secret, String lkey) throws JAXBException{
-        yahooKey=key;
-        yahooSecret=secret;
-        leagueKey=lkey;
+
+    public FantasyYahooService(String key, String secret, String lkey) throws JAXBException {
+        yahooKey = key;
+        yahooSecret = secret;
+        leagueKey = lkey;
         jaxbContext = JAXBContext.newInstance("com.yahooapis.fantasysports.fantasy.v2.base");
         unmarshaller = jaxbContext.createUnmarshaller();
     }
-    
-    public float[] getDraftProjectionsFor(String first, String last){
+
+    public float[] getDraftProjectionsFor(String first, String last) {
         float[] projections = new float[4];
-        
+
         List<Player> playersWithLast = getPlayersByName(last);
-                
+
         Player searchingFor = null;
-        for(Player player : playersWithLast){
-            if(player.getName().getFirst().equalsIgnoreCase(first)){
+        for (Player player : playersWithLast) {
+            if (player.getName().getFirst().equalsIgnoreCase(first)) {
                 searchingFor = player;
                 break;
             }
@@ -67,59 +67,122 @@ public class FantasyYahooService {
         projections[DraftProjection.AVG_PICK.ordinal()] = searchingFor.getDraftAnalysis().getAveragePick();
         projections[DraftProjection.AVG_ROUND.ordinal()] = searchingFor.getDraftAnalysis().getAverageRound();
         projections[DraftProjection.PER_DRAFTED.ordinal()] = searchingFor.getDraftAnalysis().getPercentDrafted();
-        
+
         return projections;
     }
-    
-    private List<Player> getPlayers(String requestURL){
+
+    private List<Player> getPlayers(String requestURL) {
         Response result = request(Verb.GET, requestURL);
         StringReader sr = new StringReader(result.getBody());
-             
-                FantasyContent response=null;
+
+        FantasyContent response = null;
         try {
             response = (FantasyContent) unmarshaller.unmarshal(sr);
         } catch (JAXBException ex) {
             Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        
+
         return response.getLeague().getPlayers().getPlayer();
     }
-     
-    public List<Player> getPlayersByName(String last){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;search="+last.toLowerCase()+";sort=OR;count=50/draft_analysis");
+
+    public List<Player> getPlayersByName(String last) {
+        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;search=" + last.toLowerCase() + ";sort=OR;count=50/draft_analysis");
     }
-    
-    public List<Player> getCatchers(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=C;sort=OR;count=50/draft_analysis");
+
+    public List<Player> getCatchers() {
+        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=C;sort=OR;count=25;/draft_analysis");
+        List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=C;sort=OR;start=25;count=25;/draft_analysis");
+        List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=C;sort=OR;start=50;count=25;/draft_analysis");
+        List<Player> players100 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=C;sort=OR;start=75;count=25;/draft_analysis");
+
+
+        players25.addAll(players50);
+        players25.addAll(players75);
+        players25.addAll(players100);
+
+        return players25;
     }
-    
-    public List<Player> getFirstBasemen(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=1B;sort=OR;count=50/draft_analysis");
+
+    public List<Player> getFirstBasemen() {
+        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=1B;sort=OR;count=25;/draft_analysis");
+        List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=1B;sort=OR;start=25;count=25;/draft_analysis");
+        List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=1B;sort=OR;start=50;count=25;/draft_analysis");
+        List<Player> players100 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=1B;sort=OR;start=75;count=25;/draft_analysis");
+
+        players25.addAll(players50);
+        players25.addAll(players75);
+        players25.addAll(players100);
+
+        return players25;
     }
-    
-    public List<Player> getSecondBasemen(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=2B;sort=OR;count=50/draft_analysis");
+
+    public List<Player> getSecondBasemen() {
+        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=2B;sort=OR;count=25;/draft_analysis");
+        List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=2B;sort=OR;start=25;count=25;/draft_analysis");
+        List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=2B;sort=OR;start=50;count=25;/draft_analysis");
+        List<Player> players100 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=2B;sort=OR;start=75;count=25;/draft_analysis");
+
+        players25.addAll(players50);
+        players25.addAll(players75);
+        players25.addAll(players100);
+
+        return players25;
     }
-    
-    public List<Player> getThirdBasemen(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=3B;sort=OR;count=50/draft_analysis");
+
+    public List<Player> getThirdBasemen() {
+        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=3B;sort=OR;count=25;/draft_analysis");
+        List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=3B;sort=OR;start=25;count=25;/draft_analysis");
+        List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=3B;sort=OR;start=50;count=25;/draft_analysis");
+        List<Player> players100 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=3B;sort=OR;start=75;count=25;/draft_analysis");
+
+        players25.addAll(players50);
+        players25.addAll(players75);
+        players25.addAll(players100);
+
+        return players25;
     }
-    
-    public List<Player> getShortstops(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=SS;sort=OR;count=50/draft_analysis");
+
+    public List<Player> getShortstops() {
+        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=SS;sort=OR;count=25;/draft_analysis");
+        List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=SS;sort=OR;start=25;count=25;/draft_analysis");
+        List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=SS;sort=OR;start=50;count=25;/draft_analysis");
+        List<Player> players100 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=SS;sort=OR;start=75;count=25;/draft_analysis");
+
+        players25.addAll(players50);
+        players25.addAll(players75);
+        players25.addAll(players100);
+
+        return players25;
     }
-    
-    public List<Player> getOutfielders(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=OF;sort=OR;count=100/draft_analysis");
+
+    public List<Player> getOutfielders() {
+        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=OF;sort=OR;count=25;/draft_analysis");
+        List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=OF;sort=OR;start=25;count=25;/draft_analysis");
+        List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=OF;sort=OR;start=50;count=25;/draft_analysis");
+        List<Player> players100 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=OF;sort=OR;start=75;count=25;/draft_analysis");
+
+        players25.addAll(players50);
+        players25.addAll(players75);
+        players25.addAll(players100);
+
+        return players25;
     }
-    
-    public List<Player> getPitchers(){
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=P;sort=OR;count=100/draft_analysis");
+
+    public List<Player> getPitchers() {
+        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=P;sort=OR;count=25;/draft_analysis");
+        List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=P;sort=OR;start=25;count=25;/draft_analysis");
+        List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=P;sort=OR;start=50;count=25;/draft_analysis");
+        List<Player> players100 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=P;sort=OR;start=75;count=25;/draft_analysis");
+
+        players25.addAll(players50);
+        players25.addAll(players75);
+        players25.addAll(players100);
+
+        return players25;
     }
-       
-    
-    public void connectApi(){
+
+    public void connectApi() {
         try {
             authorize();
         } catch (IOException ex) {
@@ -127,50 +190,50 @@ public class FantasyYahooService {
         } catch (URISyntaxException ex) {
             Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter Authorization Code:");
-        String authCode="";
+        String authCode = "";
         try {
             authCode = in.readLine();
         } catch (IOException ex) {
             Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         verify(authCode);
     }
-    
-    public void authorize() throws IOException, URISyntaxException{
+
+    public void authorize() throws IOException, URISyntaxException {
         authService = new ServiceBuilder()
-			.provider(YahooApi.class)
-			.apiKey(yahooKey)
-			.apiSecret(yahooSecret)
-			.build();
-		
+                .provider(YahooApi.class)
+                .apiKey(yahooKey)
+                .apiSecret(yahooSecret)
+                .build();
+
         requestToken = authService.getRequestToken();
 
         authUrl = authService.getAuthorizationUrl(requestToken);
- 
+
         Desktop.getDesktop().browse(new URI(authUrl));
     }
-    
-    private void verify(String verification){
+
+    private void verify(String verification) {
         Verifier v = new Verifier(verification);
-	accessToken = authService.getAccessToken(requestToken, v);
+        accessToken = authService.getAccessToken(requestToken, v);
     }
-    
-    private Response request(Verb type, String requestURL){
+
+    private Response request(Verb type, String requestURL) {
         OAuthRequest request = new OAuthRequest(type, requestURL);
         authService.signRequest(accessToken, request); // the access token from step 4
         Response response = request.send();
         return response;
     }
-    
-    public Boolean hasAuthUrl(){
-        return (authUrl!=null);
+
+    public Boolean hasAuthUrl() {
+        return (authUrl != null);
     }
-    
-    public Boolean isVerified(){
+
+    public Boolean isVerified() {
         return (!accessToken.isEmpty());
     }
 }
