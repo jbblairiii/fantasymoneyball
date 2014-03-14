@@ -28,7 +28,8 @@ public class MergeWhiteBox {
         FangraphYahooMerge allStats = new FangraphYahooMerge();
         Map<String, FangraphsPlayer> firstBasemen = allStats.getFirstBasemen();
          
-        PrintWriter writer = new PrintWriter("moneyball.txt");
+        PrintWriter writer = new PrintWriter("hitters.txt");
+        PrintWriter writer2 = new PrintWriter("pitchers.txt");
         
         for(Map.Entry<String, FangraphsPlayer> entry : firstBasemen.entrySet()){         
             writer.println(entry.getValue());
@@ -59,6 +60,12 @@ public class MergeWhiteBox {
             writer.println(entry.getValue());
         }
         
+        Map<String, FangraphsPlayer> pitch = allStats.getPitchers();
+        for(Map.Entry<String, FangraphsPlayer> entry : pitch.entrySet()){         
+            writer2.println(entry.getValue());
+        }
+        
         writer.close();
+        writer2.close();
     }
 }

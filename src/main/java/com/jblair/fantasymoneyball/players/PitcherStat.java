@@ -8,6 +8,6 @@ package com.jblair.fantasymoneyball.players;
  *
  * @author JB
  */
-public enum Stat {
-    G, PA, AB, H, _2B, _3B, HR, R, RBI, BB, SO, HBP, SB, CS, AVG, OBP, SLG, OPS, wOBA, Fld, BsR, WAR
+public enum PitcherStat {
+    W,L,ERA,GS,G,SV,IP,H,ER,HR,SO,BB,WHIP,K_9,BB_9,FIP,WAR
 }

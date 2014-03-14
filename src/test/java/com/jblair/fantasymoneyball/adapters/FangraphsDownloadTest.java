@@ -5,7 +5,7 @@
 package com.jblair.fantasymoneyball.adapters;
 
 import com.jblair.fantasymoneyball.players.FangraphsPlayer;
-import com.jblair.fantasymoneyball.players.Stat;
+import com.jblair.fantasymoneyball.players.HitterStat;
 import java.util.Map;
 import junit.framework.TestCase;
 
@@ -33,6 +33,6 @@ public class FangraphsDownloadTest extends TestCase {
         FangraphsDownload fgDown = new FangraphsDownload();     
         Map<String, FangraphsPlayer> firstBasemen = fgDown.load1B();
         FangraphsPlayer cdavis = firstBasemen.get("Chris Davis");
-        assertEquals(41.0, cdavis.getStat(Stat.HR));
+        assertEquals(41.0, cdavis.getStat(HitterStat.HR));
     }
 }

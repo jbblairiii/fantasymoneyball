@@ -27,7 +27,7 @@ public class FantasyYahooServiceWhiteBox {
         List<Player> firstBasemen = yahooService.getFirstBasemen();  
         String pos = firstBasemen.get(rand.nextInt(firstBasemen.size())).getDisplayPosition();
         if(pos.contains("1B")){
-            System.out.println("Got the first basemen");
+            System.out.println("Got " + firstBasemen.size() + " first basemen");
         }
         else {
             System.err.println("Couldn't retrieve first basemen " + pos);

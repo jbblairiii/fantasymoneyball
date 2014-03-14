@@ -38,7 +38,7 @@ public class FangraphYahooMerge {
         thirdBasemen=fgDownload.load3B();
         catchers=fgDownload.loadC();
         outfielders=fgDownload.loadOF();
-        //pitchers=fgDownload.loadP();
+        pitchers=fgDownload.loadP();
         shortstops=fgDownload.loadSS();
     }
     
@@ -50,6 +50,7 @@ public class FangraphYahooMerge {
         mergePlayers(yahooService.getThirdBasemen(), thirdBasemen);
         mergePlayers(yahooService.getShortstops(), shortstops);
         mergePlayers(yahooService.getOutfielders(), outfielders);
+        mergePlayers(yahooService.getPitchers(), pitchers);
     }
     
     private void mergePlayers(List<Player> yplayers, Map<String, FangraphsPlayer> fplayers){
