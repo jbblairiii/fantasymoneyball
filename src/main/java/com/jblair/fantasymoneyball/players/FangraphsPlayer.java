@@ -21,7 +21,7 @@ public class FangraphsPlayer {
         draftProjections = new float[4];
         
         stats = new double[22];
-        for(int stat=1; stat<stats.length; stat++){ //might be a pitcher, less stats
+        for(int stat=1; stat<=stats.length; stat++){ //might be a pitcher, less stats
             //removes "" around stats
             stats[stat-1] = Double.parseDouble(strStats[stat].replaceAll("\"", "")); 
         }
@@ -77,10 +77,12 @@ public class FangraphsPlayer {
     }
     
     public String toString(){
-        return getFullName() + " $" + getDraftProjection(DraftProjection.AVG_COST) + " " +
-                "\nPrice per R ("+ stats[Stat.R.ordinal()] +") :\t" + pricePerStat(Stat.R) +
-                "\nPrice per RBI("+ stats[Stat.RBI.ordinal()] +"):\t" + pricePerStat(Stat.RBI) +
-                "\nPrice per HR("+ stats[Stat.HR.ordinal()] +"):\t" + pricePerStat(Stat.HR) +
-                "\nPrice per SB("+ stats[Stat.SB.ordinal()] +"):\t" + pricePerStat(Stat.SB) + "\n";
+        return getFullName() + "|" + getDraftProjection(DraftProjection.AVG_COST) + 
+                "|"+ getStat(Stat.AVG) +
+                "|"+ getStat(Stat.R)+"|" + pricePerStat(Stat.R) +
+                "|"+ getStat(Stat.RBI) +"|" + pricePerStat(Stat.RBI) +
+                "|"+ getStat(Stat.HR) +"|" + pricePerStat(Stat.HR) +
+                "|"+ getStat(Stat.SB) +"|" + pricePerStat(Stat.SB) +
+                "|" + getStat(Stat.WAR)+"|"+pricePerStat(Stat.WAR);
     }
 }

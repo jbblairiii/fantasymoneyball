@@ -44,6 +44,7 @@ public class FangraphYahooMerge {
     
     
     private void mergeEm(){
+        mergePlayers(yahooService.getCatchers(), catchers);
         mergePlayers(yahooService.getFirstBasemen(), firstBasemen);
         mergePlayers(yahooService.getSecondBasemen(), secondBasemen);
         mergePlayers(yahooService.getThirdBasemen(), thirdBasemen);
