@@ -59,7 +59,15 @@ public class FangraphYahooMerge {
             String fullName = player.getName().getAsciiFirst() + " " + player.getName().getAsciiLast();
             
             float[] projections = new float[4];
-            projections[DraftProjection.AVG_COST.ordinal()] = player.getDraftAnalysis().getAverageCost();
+            
+            float cost = player.getDraftAnalysis().getAverageCost();
+            if(cost == 0){
+                projections[DraftProjection.AVG_COST.ordinal()] = 1;
+            }
+            else {
+                projections[DraftProjection.AVG_COST.ordinal()] = cost;  
+            }
+                   
             projections[DraftProjection.AVG_PICK.ordinal()] = player.getDraftAnalysis().getAveragePick();
             projections[DraftProjection.AVG_ROUND.ordinal()] = player.getDraftAnalysis().getAverageRound();
             projections[DraftProjection.PER_DRAFTED.ordinal()] = player.getDraftAnalysis().getPercentDrafted();

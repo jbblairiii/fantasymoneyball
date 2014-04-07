@@ -26,46 +26,65 @@ public class MergeWhiteBox {
     public static void main(String[] args) throws JAXBException, FileNotFoundException{
         
         FangraphYahooMerge allStats = new FangraphYahooMerge();
-        Map<String, FangraphsPlayer> firstBasemen = allStats.getFirstBasemen();
          
-        PrintWriter writer = new PrintWriter("hitters.txt");
-        PrintWriter writer2 = new PrintWriter("pitchers.txt");
+        PrintWriter hitters = new PrintWriter("hitters.txt");
+        PrintWriter pitchers = new PrintWriter("pitchers.txt");
+        PrintWriter wfirst = new PrintWriter("first.txt");
+        PrintWriter wsecond = new PrintWriter("second.txt");
+        PrintWriter wthird = new PrintWriter("third.txt");
+        PrintWriter wshort = new PrintWriter("short.txt");
+        PrintWriter wcatcher = new PrintWriter("catchers.txt");
+        PrintWriter woutfielder = new PrintWriter("outfielders.txt");
         
+        Map<String, FangraphsPlayer> firstBasemen = allStats.getFirstBasemen();
         for(Map.Entry<String, FangraphsPlayer> entry : firstBasemen.entrySet()){         
-            writer.println(entry.getValue());
+            hitters.println(entry.getValue());
+            wfirst.println(entry.getValue());
         }
         
+                
         Map<String, FangraphsPlayer> catchers = allStats.getCatchers();
         for(Map.Entry<String, FangraphsPlayer> entry : catchers.entrySet()){         
-            writer.println(entry.getValue());
+            hitters.println(entry.getValue());
+            wcatcher.println(entry.getValue());
         }
         
         Map<String, FangraphsPlayer> sec = allStats.getSecondBasemen();
         for(Map.Entry<String, FangraphsPlayer> entry : sec.entrySet()){         
-            writer.println(entry.getValue());
+            hitters.println(entry.getValue());
+            wsecond.println(entry.getValue());
         }
         
         Map<String, FangraphsPlayer> third = allStats.getThirdBasemen();
         for(Map.Entry<String, FangraphsPlayer> entry : third.entrySet()){         
-            writer.println(entry.getValue());
+            hitters.println(entry.getValue());
+            wthird.println(entry.getValue());
         }
         
         Map<String, FangraphsPlayer> shorts = allStats.getShortstops();
         for(Map.Entry<String, FangraphsPlayer> entry : shorts.entrySet()){         
-            writer.println(entry.getValue());
+            hitters.println(entry.getValue());
+            wshort.println(entry.getValue());
         }
         
         Map<String, FangraphsPlayer> out = allStats.getOutfielders();
         for(Map.Entry<String, FangraphsPlayer> entry : out.entrySet()){         
-            writer.println(entry.getValue());
+            hitters.println(entry.getValue());
+            woutfielder.println(entry.getValue());
         }
         
         Map<String, FangraphsPlayer> pitch = allStats.getPitchers();
         for(Map.Entry<String, FangraphsPlayer> entry : pitch.entrySet()){         
-            writer2.println(entry.getValue());
+            pitchers.println(entry.getValue());
         }
         
-        writer.close();
-        writer2.close();
+        hitters.close();
+        pitchers.close();
+        wfirst.close();
+        wsecond.close();
+        wthird.close();
+        wshort.close();
+        wcatcher.close();
+        woutfielder.close();
     }
 }

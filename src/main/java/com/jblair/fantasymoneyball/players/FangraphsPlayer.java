@@ -15,11 +15,13 @@ public class FangraphsPlayer {
     private float[] draftProjections;
     private final int NUM_STATS=5; //only the stats that cost money
     private boolean isPitcher, isHitter;
+    private final String DELIM=",";
   
     public FangraphsPlayer(String name, String[] strStats, Position primary){
         fullName = name;
         positions = new Position[3]; 
         draftProjections = new float[4];
+        draftProjections[DraftProjection.AVG_COST.ordinal()] = 1; //no yahoo
         positions[0] = primary;
         
         if(primary == primary.START || primary == primary.CLOSER || primary == primary.RELIEF){
@@ -89,30 +91,36 @@ public class FangraphsPlayer {
     
     //pricing only matters for AVG, R, RBI, HR, SB
     public double pricePerStat(HitterStat stat){
-        return getDraftProjection(DraftProjection.AVG_COST) / 5 / stats[stat.ordinal()];
+        if(getStat(stat) == 0){
+            return 0;
+        }
+        return getDraftProjection(DraftProjection.AVG_COST) / 5 / getStat(stat);
     }
     public double pricePerStat(PitcherStat stat){
-        return getDraftProjection(DraftProjection.AVG_COST) / 5 / stats[stat.ordinal()];
+        if(getStat(stat) == 0){
+            return 0;
+        }
+        return getDraftProjection(DraftProjection.AVG_COST) / 5 / getStat(stat);
     }
     
     public String toString(){
         if(isHitter){
-            return getFullName() + "|" + getDraftProjection(DraftProjection.AVG_COST) + 
-                    "|"+ getStat(HitterStat.AVG) +
-                    "|"+ getStat(HitterStat.R)+"|" + pricePerStat(HitterStat.R) +
-                    "|"+ getStat(HitterStat.RBI) +"|" + pricePerStat(HitterStat.RBI) +
-                    "|"+ getStat(HitterStat.HR) +"|" + pricePerStat(HitterStat.HR) +
-                    "|"+ getStat(HitterStat.SB) +"|" + pricePerStat(HitterStat.SB) +
-                    "|" + getStat(HitterStat.WAR)+"|"+pricePerStat(HitterStat.WAR);
+            return getFullName() + DELIM + getDraftProjection(DraftProjection.AVG_COST) + 
+                    DELIM+ getStat(HitterStat.AVG) +
+                    DELIM+ getStat(HitterStat.R)+DELIM + pricePerStat(HitterStat.R) +
+                    DELIM+ getStat(HitterStat.RBI) +DELIM + pricePerStat(HitterStat.RBI) +
+                    DELIM+ getStat(HitterStat.HR) +DELIM + pricePerStat(HitterStat.HR) +
+                    DELIM+ getStat(HitterStat.SB) +DELIM + pricePerStat(HitterStat.SB) +
+                    DELIM + getStat(HitterStat.WAR)+DELIM+pricePerStat(HitterStat.WAR);
         }
         else if (isPitcher){
-            return getFullName() + "|" + getDraftProjection(DraftProjection.AVG_COST) + 
-                    "|"+ getStat(PitcherStat.ERA) +
-                    "|"+ getStat(PitcherStat.WHIP)+
-                    "|"+ getStat(PitcherStat.W) +"|" + pricePerStat(PitcherStat.W) +
-                    "|"+ getStat(PitcherStat.SO) +"|" + pricePerStat(PitcherStat.SO) +
-                    "|"+ getStat(PitcherStat.SV) +"|" + pricePerStat(PitcherStat.SV) +
-                    "|" + getStat(PitcherStat.WAR)+"|"+pricePerStat(PitcherStat.WAR);
+            return getFullName() + DELIM + getDraftProjection(DraftProjection.AVG_COST) + 
+                    DELIM+ getStat(PitcherStat.ERA) +
+                    DELIM+ getStat(PitcherStat.WHIP)+
+                    DELIM+ getStat(PitcherStat.W) +DELIM + pricePerStat(PitcherStat.W) +
+                    DELIM+ getStat(PitcherStat.SO) +DELIM + pricePerStat(PitcherStat.SO) +
+                    DELIM+ getStat(PitcherStat.SV) +DELIM + pricePerStat(PitcherStat.SV) +
+                    DELIM + getStat(PitcherStat.WAR)+DELIM+pricePerStat(PitcherStat.WAR);
         }
         return "";
     }
