@@ -26,37 +26,37 @@ public class FangraphsDownload {
     private static final String COMMA = ",";
 
     public Map<String, FangraphsPlayer> loadC(){
-        String[] filenames = {"projections/fans_c.csv"};
+        String[] filenames = {"src/main/resources/projections/fans_c.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> load1B(){
-        String[] filenames = {"projections/fans_1b.csv"};
+        String[] filenames = {"src/main/resources/projections/fans_1b.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> load2B(){
-        String[] filenames = {"projections/fans_2b.csv"};
+        String[] filenames = {"src/main/resources/projections/fans_2b.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> load3B(){
-        String[] filenames = {"projections/fans_3b.csv"};
+        String[] filenames = {"src/main/resources/projections/fans_3b.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> loadSS(){
-        String[] filenames = {"projections/fans_ss.csv"};
+        String[] filenames = {"src/main/resources/projections/fans_ss.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> loadOF(){
-        String[] filenames = {"projections/fans_of1.csv"};
+        String[] filenames = {"src/main/resources/projections/fans_of1.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> loadP(){
-        String[] filenames = {"projections/fans_p1.csv"};
+        String[] filenames = {"src/main/resources/projections/fans_p1.csv"};
         return loadPitcherStats(filenames);
     }
     
