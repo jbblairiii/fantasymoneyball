@@ -10,8 +10,10 @@ import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent.League.Players
 import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent.League.Players.Player;
 import java.awt.Desktop;
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -41,15 +43,37 @@ public class FantasyYahooService {
     private Token requestToken, accessToken;
     private JAXBContext jaxbContext;
     private Unmarshaller unmarshaller;
+    private PrintWriter xmlWriter;
+    private boolean saveXml;
+    private int savedXmlCount=0;
 
     public FantasyYahooService(String key, String secret, String lkey) throws JAXBException {
+        this(key, secret, lkey, false);
+    }
+
+    
+    public FantasyYahooService(String key, String secret, String lkey, boolean save) throws JAXBException {
         yahooKey = key;
         yahooSecret = secret;
         leagueKey = lkey;
         jaxbContext = JAXBContext.newInstance("com.yahooapis.fantasysports.fantasy.v2.base");
         unmarshaller = jaxbContext.createUnmarshaller();
+        
+        if(save){
+            saveXml=true;
+            initXmlWriter();
+        }
     }
 
+    private void initXmlWriter(){
+       try {
+            savedXmlCount++;
+            xmlWriter = new PrintWriter("saved_xml_"+savedXmlCount+".xml");
+        } catch (IOException ex) {
+            Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
     public float[] getDraftProjectionsFor(String first, String last) {
         float[] projections = new float[4];
 
@@ -73,6 +97,11 @@ public class FantasyYahooService {
 
     private List<Player> getPlayers(String requestURL) {
         Response result = request(Verb.GET, requestURL);
+        if(saveXml){
+            xmlWriter.print(result.getBody());
+            xmlWriter.close();
+            initXmlWriter();
+        }
         StringReader sr = new StringReader(result.getBody());
 
         FantasyContent response = null;

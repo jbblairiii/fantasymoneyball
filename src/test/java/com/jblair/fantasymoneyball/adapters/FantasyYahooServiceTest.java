@@ -103,28 +103,5 @@ public class FantasyYahooServiceTest extends TestCase {
             assertTrue(!yahooService.hasAuthUrl());
         }     
     }
-
-    /**
-     * Test of verify method, of class FantasyYahooService.
-     
-    public void testVerify() {
-        System.out.println("verify");
-        yahooService.verify(authCode);
-        // TODO review the generated test code and remove the default call to fail.
-        assertTrue(yahooService.isVerified());
-    }*/
-
-    /**
-     * Test of request method, of class FantasyYahooService.
-     
-    public void testRequest() {
-        System.out.println("request");
-        Verb type = Verb.GET;	
-        String leagueKey = "mlb.l.67468";
-        String requestURL =  "http://fantasysports.yahooapis.com/fantasy/v2/league/"+leagueKey+"/players;position=SS";
-        Response result = yahooService.request(type, requestURL);
-        // TODO review the generated test code and remove the default call to fail.
-        assertTrue(result.isSuccessful());
-    }*/
 }
 

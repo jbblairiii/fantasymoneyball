@@ -11,6 +11,7 @@ import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent.League.Players
 import com.yahooapis.fantasysports.fantasy.v2.base.FantasyContent.League.Players.Player;
 import java.awt.Desktop;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
@@ -34,7 +35,7 @@ import javax.xml.bind.Unmarshaller;
  *
  * @author jb834r
  */
-public class FantasyYahooService {
+public class MockFantasyYahooService {
 
     private String yahooKey, yahooSecret, leagueKey;
     private String authUrl;
@@ -43,7 +44,7 @@ public class FantasyYahooService {
     private JAXBContext jaxbContext;
     private Unmarshaller unmarshaller;
 
-    public FantasyYahooService(String key, String secret, String lkey) throws JAXBException {
+    public MockFantasyYahooService(String key, String secret, String lkey) throws JAXBException {
         yahooKey = key;
         yahooSecret = secret;
         leagueKey = lkey;
@@ -76,12 +77,35 @@ public class FantasyYahooService {
         //Response result = request(Verb.GET, requestURL);
         //StringReader sr = new StringReader(result.getBody());
 
-        StringReader sr = new StringReader();
+        File xmlFile=null;
+        
+        if(requestURL.equalsIgnoreCase("catcher")){
+            xmlFile=new File("src/test/mock_xml/c.xml");
+        }
+        else if(requestURL.equalsIgnoreCase("pitcher")){
+            xmlFile=new File("src/test/mock_xml/p.xml");
+        }
+        else if(requestURL.equalsIgnoreCase("first")){
+            xmlFile=new File("src/test/mock_xml/1b.xml");
+        }
+        else if(requestURL.equalsIgnoreCase("second")){
+            xmlFile=new File("src/test/mock_xml/2b.xml");
+        }
+        else if(requestURL.equalsIgnoreCase("third")){
+            xmlFile=new File("src/test/mock_xml/3b.xml");
+        }
+        else if(requestURL.equalsIgnoreCase("short")){
+            xmlFile=new File("src/test/mock_xml/ss.xml");
+        }
+        else if(requestURL.equalsIgnoreCase("out")){
+            xmlFile=new File("src/test/mock_xml/of.xml");
+        }
+
         FantasyContent response = null;
         try {
-            response = (FantasyContent) unmarshaller.unmarshal(sr);
+            response = (FantasyContent) unmarshaller.unmarshal(xmlFile);
         } catch (JAXBException ex) {
-            Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MockFantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
 
@@ -89,65 +113,44 @@ public class FantasyYahooService {
     }
 
     public List<Player> getPlayersByName(String last) {
-        return getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;search=" + last.toLowerCase() + ";sort=OR;count=50/draft_analysis");
+        return getPlayers("yahh");
     }
 
     public List<Player> getCatchers() {
-        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=C;sort=OR;count=25;/draft_analysis");
-
-
-        return players25;
+         return getPlayers("catcher");
     }
 
     public List<Player> getFirstBasemen() {
-        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=1B;sort=OR;count=25;/draft_analysis");
-
-
-        return players25;
+         return getPlayers("first");
     }
 
     public List<Player> getSecondBasemen() {
-        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=2B;sort=OR;count=25;/draft_analysis");
-
-
-        return players25;
+         return getPlayers("second");
     }
 
     public List<Player> getThirdBasemen() {
-        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=3B;sort=OR;count=25;/draft_analysis");
-
-
-        return players25;
+         return getPlayers("third");
     }
 
     public List<Player> getShortstops() {
-        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=SS;sort=OR;count=25;/draft_analysis");
-
-
-        return players25;
+         return getPlayers("short");
     }
 
     public List<Player> getOutfielders() {
-        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=OF;sort=OR;count=25;/draft_analysis");
-
-
-        return players25;
+         return getPlayers("out");
     }
 
     public List<Player> getPitchers() {
-        List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=P;sort=OR;count=25;/draft_analysis");
-
-
-        return players25;
+         return getPlayers("pitcher");
     }
 
     public void connectApi() {
         try {
             authorize();
         } catch (IOException ex) {
-            Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MockFantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (URISyntaxException ex) {
-            Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MockFantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -160,7 +163,7 @@ public class FantasyYahooService {
             if(false){throw new IOException();}
             
         } catch (IOException ex) {
-            Logger.getLogger(FantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MockFantasyYahooService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         verify(authCode);
