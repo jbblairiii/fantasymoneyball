@@ -28,7 +28,7 @@ public class FangraphsPlayerTest extends TestCase {
         super.setUp();
         String[] hit_stats_arr = hit_stats.split(",");
         String[] pitch_stats_arr = pitch_stats.split(",");
-        testHitter = new FangraphsPlayer("JB Blair", hit_stats_arr, Position.THIRD);
+        testHitter = new FangraphsPlayer("JB Blair", hit_stats_arr, Position.FIRST);
         testPitcher = new FangraphsPlayer("Hugh Jack", pitch_stats_arr, Position.START);
     }
     
