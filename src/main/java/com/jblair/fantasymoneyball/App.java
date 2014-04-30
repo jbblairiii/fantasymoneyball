@@ -31,7 +31,7 @@ public class App
              
             if(!players.isEmpty()){
                 for(Player player : players){
-                    System.out.println(player.getName().getFull());
+                    System.out.println(player.getName().getFull() + " " + player.getDraftAnalysis().getAverageCost());
                 }
             }
             else{

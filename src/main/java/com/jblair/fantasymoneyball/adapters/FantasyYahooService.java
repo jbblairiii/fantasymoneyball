@@ -120,6 +120,7 @@ public class FantasyYahooService {
     }
 
     public List<Player> getCatchers() {
+        System.out.println("Retrieving catcher projections from Yahoo");
         List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=C;sort=OR;count=25;/draft_analysis");
         List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=C;sort=OR;start=25;count=25;/draft_analysis");
         List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=C;sort=OR;start=50;count=25;/draft_analysis");
@@ -134,6 +135,7 @@ public class FantasyYahooService {
     }
 
     public List<Player> getFirstBasemen() {
+        System.out.println("Retrieving first base projections from Yahoo");
         List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=1B;sort=OR;count=25;/draft_analysis");
         List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=1B;sort=OR;start=25;count=25;/draft_analysis");
         List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=1B;sort=OR;start=50;count=25;/draft_analysis");
@@ -147,6 +149,7 @@ public class FantasyYahooService {
     }
 
     public List<Player> getSecondBasemen() {
+        System.out.println("Retrieving second base projections from Yahoo");
         List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=2B;sort=OR;count=25;/draft_analysis");
         List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=2B;sort=OR;start=25;count=25;/draft_analysis");
         List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=2B;sort=OR;start=50;count=25;/draft_analysis");
@@ -160,6 +163,7 @@ public class FantasyYahooService {
     }
 
     public List<Player> getThirdBasemen() {
+        System.out.println("Retrieving third base projections from Yahoo");
         List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=3B;sort=OR;count=25;/draft_analysis");
         List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=3B;sort=OR;start=25;count=25;/draft_analysis");
         List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=3B;sort=OR;start=50;count=25;/draft_analysis");
@@ -173,6 +177,7 @@ public class FantasyYahooService {
     }
 
     public List<Player> getShortstops() {
+        System.out.println("Retrieving shortstop projections from Yahoo");
         List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=SS;sort=OR;count=25;/draft_analysis");
         List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=SS;sort=OR;start=25;count=25;/draft_analysis");
         List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=SS;sort=OR;start=50;count=25;/draft_analysis");
@@ -186,6 +191,7 @@ public class FantasyYahooService {
     }
 
     public List<Player> getOutfielders() {
+        System.out.println("Retrieving outfield projections from Yahoo");
         List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=OF;sort=OR;count=25;/draft_analysis");
         List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=OF;sort=OR;start=25;count=25;/draft_analysis");
         List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=OF;sort=OR;start=50;count=25;/draft_analysis");
@@ -199,6 +205,7 @@ public class FantasyYahooService {
     }
 
     public List<Player> getPitchers() {
+        System.out.println("Retrieving pitcher projections from Yahoo");
         List<Player> players25 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=P;sort=OR;count=25;/draft_analysis");
         List<Player> players50 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=P;sort=OR;start=25;count=25;/draft_analysis");
         List<Player> players75 = getPlayers("http://fantasysports.yahooapis.com/fantasy/v2/league/" + leagueKey + "/players;position=P;sort=OR;start=50;count=25;/draft_analysis");

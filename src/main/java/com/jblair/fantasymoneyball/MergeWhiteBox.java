@@ -36,6 +36,8 @@ public class MergeWhiteBox {
         PrintWriter wcatcher = new PrintWriter("catchers.txt");
         PrintWriter woutfielder = new PrintWriter("outfielders.txt");
         
+        System.out.println("Writing results out");
+        
         Map<String, FangraphsPlayer> firstBasemen = allStats.getFirstBasemen();
         for(Map.Entry<String, FangraphsPlayer> entry : firstBasemen.entrySet()){         
             hitters.println(entry.getValue());
@@ -86,5 +88,7 @@ public class MergeWhiteBox {
         wshort.close();
         wcatcher.close();
         woutfielder.close();
+        
+        System.out.println("COMPLETE");
     }
 }

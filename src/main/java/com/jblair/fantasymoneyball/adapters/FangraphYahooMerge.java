@@ -33,17 +33,34 @@ public class FangraphYahooMerge {
     }
 
     private void loadAllPlayers(){
+        System.out.println("Loading Fangraphs first basemen");
         firstBasemen=fgDownload.load1B();
+        
+        System.out.println("Loading Fangraphs second basemen");
         secondBasemen=fgDownload.load2B();
+        
+        System.out.println("Loading Fangraphs third basemen");
         thirdBasemen=fgDownload.load3B();
-        catchers=fgDownload.loadC();
-        outfielders=fgDownload.loadOF();
-        pitchers=fgDownload.loadP();
+        
+        System.out.println("Loading Fangraphs shortstops");
         shortstops=fgDownload.loadSS();
+        
+        System.out.println("Loading Fangraphs catchers");
+        catchers=fgDownload.loadC();
+        
+        System.out.println("Loading Fangraphs outfielders");
+        outfielders=fgDownload.loadOF();
+        
+        System.out.println("Loading Fangraphs pitchers");
+        pitchers=fgDownload.loadP();
+        
+        System.out.println("DONE");
+            
     }
     
     
     private void mergeEm(){
+        System.out.println("Merging Fangraphs and Yahoo projections");
         mergePlayers(yahooService.getCatchers(), catchers);
         mergePlayers(yahooService.getFirstBasemen(), firstBasemen);
         mergePlayers(yahooService.getSecondBasemen(), secondBasemen);
@@ -51,6 +68,7 @@ public class FangraphYahooMerge {
         mergePlayers(yahooService.getShortstops(), shortstops);
         mergePlayers(yahooService.getOutfielders(), outfielders);
         mergePlayers(yahooService.getPitchers(), pitchers);
+        System.out.println("DONE");
     }
     
     private void mergePlayers(List<Player> yplayers, Map<String, FangraphsPlayer> fplayers){
