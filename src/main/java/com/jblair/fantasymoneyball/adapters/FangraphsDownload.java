@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -26,37 +27,37 @@ public class FangraphsDownload {
     private static final String COMMA = ",";
 
     public Map<String, FangraphsPlayer> loadC(){
-        String[] filenames = {"src/main/resources/projections/fans_c.csv"};
+        String[] filenames = {"/projections/fans_c.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> load1B(){
-        String[] filenames = {"src/main/resources/projections/fans_1b.csv"};
+        String[] filenames = {"/projections/fans_1b.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> load2B(){
-        String[] filenames = {"src/main/resources/projections/fans_2b.csv"};
+        String[] filenames = {"/projections/fans_2b.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> load3B(){
-        String[] filenames = {"src/main/resources/projections/fans_3b.csv"};
+        String[] filenames = {"/projections/fans_3b.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> loadSS(){
-        String[] filenames = {"src/main/resources/projections/fans_ss.csv"};
+        String[] filenames = {"/projections/fans_ss.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> loadOF(){
-        String[] filenames = {"src/main/resources/projections/fans_of1.csv"};
+        String[] filenames = {"/projections/fans_of1.csv"};
         return loadHitterStats(filenames);
     }
     
     public Map<String, FangraphsPlayer> loadP(){
-        String[] filenames = {"src/main/resources/projections/fans_p1.csv"};
+        String[] filenames = {"/projections/fans_p1.csv"};
         return loadPitcherStats(filenames);
     }
     
@@ -69,7 +70,7 @@ public class FangraphsDownload {
         for(String file : filenames){
             Boolean header=true;
             try {
-                reader = new BufferedReader(new FileReader(file));   
+                reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(file)));   
                              
                 while((line = reader.readLine()) != null){
                     if(header){header=false; continue;} // skips the header line
@@ -84,7 +85,7 @@ public class FangraphsDownload {
                 }
             } 
             catch (IOException io){
-
+                io.printStackTrace();
             }
         }
                
@@ -100,7 +101,7 @@ public class FangraphsDownload {
         for(String file : filenames){
             Boolean header=true;
             try {
-                reader = new BufferedReader(new FileReader(file));   
+                reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(file)));   
                              
                 while((line = reader.readLine()) != null){
                     if(header){header=false; continue;} // skips the header line
@@ -115,7 +116,7 @@ public class FangraphsDownload {
                 }
             } 
             catch (IOException io){
-
+                io.printStackTrace();
             }
         }
                
