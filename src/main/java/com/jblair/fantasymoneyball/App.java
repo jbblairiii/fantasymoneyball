@@ -28,10 +28,16 @@ public class App
         
         while(!last.equalsIgnoreCase("q")){
             List<Player> players = yahooService.getPlayersByName(last);
-                              
-            for(Player player : players){
-                System.out.println(player.getName().getFull());
+             
+            if(!players.isEmpty()){
+                for(Player player : players){
+                    System.out.println(player.getName().getFull());
+                }
             }
+            else{
+                System.out.println(last + "not found");
+            }
+               
             
             last = in.readLine();
         }
