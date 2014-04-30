@@ -35,7 +35,7 @@ public class App
                 }
             }
             else{
-                System.out.println(last + "not found");
+                System.out.println(last + " not found");
             }
                
             
